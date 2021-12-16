@@ -1,0 +1,67 @@
+{
+  "name": "devies-tools-react",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "start-local": "REACT_APP_API_URL=http://localhost:5000 react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint src --ext .js"
+  },
+  "dependencies": {
+    "@devexpress/dx-react-core": "^2.7.1",
+    "@devexpress/dx-react-grid": "^2.7.1",
+    "@devexpress/dx-react-grid-material-ui": "^2.7.1",
+    "@material-ui/core": "4.9.8",
+    "@material-ui/icons": "4.9.1",
+    "@material-ui/lab": "4.0.0-alpha.47",
+    "@material-ui/pickers": "4.0.0-alpha.4",
+    "@microsoft/signalr": "^3.1.0",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "array-move": "^2.2.1",
+    "clsx": "^1.0.4",
+    "date-fns": "2.23.0",
+    "iso-639-1": "^2.1.0",
+    "jspdf": "^2.4.0",
+    "jspdf-autotable": "^3.5.23",
+    "lodash": "^4.17.15",
+    "moment": "^2.25.3",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-google-login": "5.1.3",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.4.0",
+    "react-sortable-hoc": "^1.10.1",
+    "typeface-roboto": "^0.0.75",
+    "whatwg-fetch": "^3.0.0",
+    "wretch": "^1.6.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.7.5",
+    "babel-preset-env": "^1.7.0",
+    "cypress": "^3.8.2",
+    "eslint": "^6.7.2",
+    "eslint-config-react-app": "^5.1.0",
+    "eslint-plugin-cypress": "^2.8.1",
+    "husky": "^4.0.3",
+    "typescript": "^3.7.3"
+  },
+  "browserslist": {
+    "production": [">0.2%", "not dead", "not op_mini all"],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "yarn lint"
+    }
+  }
+}
