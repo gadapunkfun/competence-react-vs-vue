@@ -1,18 +1,15 @@
+import { DateTime } from "luxon";
 import { TodoItem } from "../models/TodoItem";
 
 export const getTodos = async (): Promise<TodoItem[]> => {
   const todosJson = localStorage.getItem("todos");
-  const todos = todosJson
-    ? (JSON.parse(todosJson) as TodoItem[])
-    : ([] as TodoItem[]);
+  const todos = todosJson ? (JSON.parse(todosJson) as TodoItem[]) : [];
   return fakeDelayedResponse(todos, 500);
 };
 
 export const addTodo = async (todo: TodoItem): Promise<TodoItem> => {
   const todosJson = localStorage.getItem("todos");
-  const todos = todosJson
-    ? (JSON.parse(todosJson) as TodoItem[])
-    : ([] as TodoItem[]);
+  const todos = todosJson ? (JSON.parse(todosJson) as TodoItem[]) : [];
 
   todos.push(todo);
   localStorage.setItem("todos", JSON.stringify(todos));

@@ -1,4 +1,5 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { DateTime } from "luxon";
 import { getTodos, addTodo as addTodoApi } from "../api/todoApi";
 import { TodoItem } from "../models/TodoItem";
 import type { AppThunk, RootState } from "./index";
@@ -30,10 +31,19 @@ export const todoSlice = createSlice({
     removeTodo: (state, action: PayloadAction<TodoItem>) => {
       state.todos = state.todos.filter((todo) => todo.id !== action.payload.id);
     },
+    finishTodo: (state, action: PayloadAction<TodoItem>) => {
+      const todoToFinish = state.todos.find(
+        (todo) => todo.id === action.payload.id
+      );
+      if (todoToFinish) {
+        todoToFinish.isDone = true;
+        todoToFinish.completed = DateTime.now().toISODate();
+      }
+    },
   },
 });
 
-export const { removeTodo } = todoSlice.actions;
+export const { removeTodo, finishTodo } = todoSlice.actions;
 
 export const fetchTodos = (): AppThunk => async (dispatch) => {
   try {

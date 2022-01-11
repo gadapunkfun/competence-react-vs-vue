@@ -26,7 +26,7 @@ const TodoList = () => {
         id: uuid(),
         content: newTodoContent,
         isDone: false,
-        created: DateTime.now(),
+        created: DateTime.now().toISODate(),
       };
       dispatch(addTodo(newTodo));
       setNewTodoContent("");
