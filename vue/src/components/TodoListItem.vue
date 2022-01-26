@@ -1,18 +1,25 @@
 <template>
-	<div class="card">
-		<div class="card--content">
-			<div class="card--content--text">
-				<h5>{{ todoItem.content }}</h5>
-				<small>Created: {{ formattedDate }}</small>
-			</div>
-			<div :class="checkboxClass" @click="finishTodoItem"></div>
-		</div>
-	</div>
+	<n-card title="Todo item:" size="medium">
+		<n-grid :x-gap="10" :y-gap="5" :cols="2">
+			<n-gi>{{ todoItem.content }}</n-gi>
+			<n-gi>
+				<n-space justify="end">
+					<div :class="todoItem.isDone ? 'task--success' : 'task-danger'">{{ todoItem.isDone }}</div>
+				</n-space>
+			</n-gi>
+		</n-grid>
+
+		<!-- <n-space @click="finishTodoItem" align="end"></n-space> -->
+
+		<template #footer>
+			<small>Created: {{ todoItem.created }}</small>
+		</template>
+	</n-card>
 </template>
 
 <script lang="ts">
-import { TodoItem } from "@/models/TodoItem";
 import { store } from "@/store";
+import { TodoItem } from "@/models/TodoItem";
 import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
@@ -26,12 +33,6 @@ export default defineComponent({
 				? `${baseClass}--success`
 				: `${baseClass}--failed`;
 		},
-		formattedDate(): string {
-			if (this.todoItem) {
-				return this.todoItem?.created.toString();
-			}
-			return "---";
-		},
 	},
 	methods: {
 		finishTodoItem() {
@@ -40,38 +41,16 @@ export default defineComponent({
 	},
 });
 </script>
-<style lang="stylus">
-.card {
+<style lang="stylus" scoped>
+.task {
 	height: 100%;
-	width: 300px;
-	background: #705E78;
-	color: #fff;
-	margin-bottom: 10px;
 
-	&--content {
-		display: grid;
-		grid-template-columns: 90% 10%;
-		grid-template-row: 100%;
+	&--success {
+		background: green;
+	}
 
-		&--text {
-			width: 90%;
-			text-align: left;
-			padding: 5px;
-		}
-
-		&--checkbox {
-			width: 10%;
-			display: block;
-			height: 100%;
-
-			&--success {
-				background-color: #F3FEB0;
-			}
-
-			&--failed {
-				background-color: #812F33;
-			}
-		}
+	&--danger {
+		background: #990c60;
 	}
 }
 </style>
