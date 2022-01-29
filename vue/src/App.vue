@@ -22,10 +22,14 @@
 </template>
 
 <script lang="ts">
+import { mapGetters } from "vuex";
 import { defineComponent } from "vue";
 import { darkTheme, GlobalThemeOverrides } from 'naive-ui'
 
 export default defineComponent({
+    computed: {
+        ...mapGetters(["todos"])
+    },
 	setup() {
 		const themeOptions: GlobalThemeOverrides = {
 			common: {
