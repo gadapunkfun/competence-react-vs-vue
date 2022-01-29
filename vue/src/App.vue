@@ -4,6 +4,19 @@
 			<n-layout-content>
 				<router-view />
 			</n-layout-content>
+            <n-layout-footer bordered position="absolute">
+                <n-card title="Task opinion" v-if="todos.length > 0" size="medium">
+                    <template v-if="todos.length <= 3">
+                        This is a good amount of tasks
+                    </template>
+                    <template v-else-if="todos.length <= 8">
+                        You should get going with your tasks, this is a lot...
+                    </template>
+                    <template v-else>
+                        As long as you get started on something...
+                    </template>
+                </n-card>
+            </n-layout-footer>
 		</n-layout>
 	</n-config-provider>
 </template>
