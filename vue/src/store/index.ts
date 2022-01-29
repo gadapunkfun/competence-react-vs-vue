@@ -34,12 +34,14 @@ export default createStore<State>({
 		}
 	},
 	mutations: {
-		[TodoMutationTypes.ADD_TODO](state, todoItem: TodoItem) {
+		async [TodoMutationTypes.ADD_TODO](state, todoItem: TodoItem) {
 			if (todoItem && todoItem.content) {
+                await addTodo(todoItem);
 				state.currentTodos.push(todoItem);
 			}
 		},
 		[TodoMutationTypes.REMOVE_TODO](state, todoItem: TodoItem) {
+            
 			const indexOfTodo = state.currentTodos.findIndex(todo => todo == todoItem);
 			if (todoItem && indexOfTodo >= 0) {
 				state.currentTodos = state.currentTodos.filter(todo => todo != todoItem)
