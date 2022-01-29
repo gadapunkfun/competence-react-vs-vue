@@ -1,18 +1,24 @@
 import { InjectionKey } from "vue";
 import { createStore, Store } from 'vuex'
 import { TodoItem } from "@/models/TodoItem";
-import { TodoMutationTypes } from "@/models/Store/MutationTypes/TodoMutationTypes";
+import { addTodo } from "@/api/todoApi"
+import { TodoState } from "@/models/store/todo/TodoState";
+import { TodoMutationTypes } from "@/models/store/todo/TodoMutationTypes";
 
-export interface State {
-	currentTodos: TodoItem[];
+export interface State extends TodoState {
+    emptyValue: null
 }
 
 export const key: InjectionKey<Store<State>> = Symbol();
 
-export const store = createStore<State>({
+export default createStore<State>({
 	state: {
-		currentTodos: localStorage.currentTodos ? JSON.parse(localStorage.currentTodos) : [],
+        emptyValue: null,
+        currentTodos: localStorage.currentTodos ? JSON.parse(localStorage.currentTodos) : [],
 	},
+    getters: {
+        todos: state => state.currentTodos
+    },
 	actions: {
 		addTodo(store, todoItem: TodoItem) {
 			store.commit(TodoMutationTypes.ADD_TODO, todoItem);
