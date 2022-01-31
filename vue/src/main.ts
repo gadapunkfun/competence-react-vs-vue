@@ -1,8 +1,9 @@
 import App from "./App.vue"
-import router from "./router"
 import naive from "naive-ui";
-import { createApp } from "vue"
-import { store, key } from "./store"
+import router from "./router";
+import { createApp } from "vue";
+import store, { key } from "./store";
+
 import "vfonts/Lato.css";
 import "vfonts/FiraCode.css";
 

@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { store } from "@/store";
+import store from "@/store";
 import { TodoItem } from "@/models/TodoItem";
 import { defineComponent, PropType } from "vue";
 
