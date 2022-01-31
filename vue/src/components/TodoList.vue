@@ -39,7 +39,8 @@ export default {
 	methods: {
 		addTodo() {
 			store.dispatch(TodoMutationTypes.ADD_TODO, new TodoItem(this.todoContent));
+            this.todoContent = "";
 		},
 	},
-});
+}
 </script>
