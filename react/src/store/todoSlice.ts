@@ -1,17 +1,19 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { DateTime } from "luxon";
-import { getTodos, addTodo as addTodoApi } from "../api/todoApi";
+import * as todoApi from "../api/todoApi";
 import { TodoItem } from "../models/TodoItem";
 import type { AppThunk, RootState } from "./index";
 
 interface TodoState {
   todos: TodoItem[];
   isLoading: boolean;
+  showExpanded: boolean;
 }
 
 const initialState: TodoState = {
   todos: [],
   isLoading: false,
+  showExpanded: false,
 };
 
 export const todoSlice = createSlice({
@@ -31,24 +33,23 @@ export const todoSlice = createSlice({
     removeTodo: (state, action: PayloadAction<TodoItem>) => {
       state.todos = state.todos.filter((todo) => todo.id !== action.payload.id);
     },
-    finishTodo: (state, action: PayloadAction<TodoItem>) => {
-      const todoToFinish = state.todos.find(
-        (todo) => todo.id === action.payload.id
+    updateTodo: (state, action: PayloadAction<TodoItem>) => {
+      state.todos = state.todos.map((t) =>
+        t.id === action.payload.id ? action.payload : t
       );
-      if (todoToFinish) {
-        todoToFinish.isDone = true;
-        todoToFinish.completed = DateTime.now().toISODate();
-      }
+    },
+    showExpanded: (state, action: PayloadAction<boolean>) => {
+      state.showExpanded = action.payload;
     },
   },
 });
 
-export const { removeTodo, finishTodo } = todoSlice.actions;
+export const { showExpanded } = todoSlice.actions;
 
 export const fetchTodos = (): AppThunk => async (dispatch) => {
   try {
     dispatch(todoSlice.actions.fetchTodosStart());
-    const todos = await getTodos();
+    const todos = await todoApi.getTodos();
     dispatch(todoSlice.actions.fetchTodosSuccess(todos));
   } catch (err) {
     console.log(err);
@@ -59,8 +60,32 @@ export const addTodo =
   (todo: TodoItem): AppThunk =>
   async (dispatch) => {
     try {
-      await addTodoApi(todo);
+      await todoApi.addTodo(todo);
       dispatch(todoSlice.actions.addTodo(todo));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+export const removeTodo =
+  (todo: TodoItem): AppThunk =>
+  async (dispatch) => {
+    try {
+      await todoApi.removeTodo(todo);
+      dispatch(todoSlice.actions.removeTodo(todo));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+export const finishTodo =
+  (todo: TodoItem): AppThunk =>
+  async (dispatch) => {
+    try {
+      todo.isDone = true;
+      todo.completed = DateTime.now().toISODate();
+      await todoApi.updateTodo(todo);
+      dispatch(todoSlice.actions.updateTodo(todo));
     } catch (err) {
       console.log(err);
     }
