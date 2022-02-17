@@ -24,31 +24,34 @@
 
 <script>
 import store from "@/store";
+import { mapGetters } from 'vuex';
 import { TodoItem } from "@/models/TodoItem";
 import TodoListItem from "@/components/TodoListItem.vue";
 import { TodoMutationTypes } from "@/models/store/todo/TodoMutationTypes";
 
 export default {
-  components: {
-    TodoListItem,
-  },
-  data() {
-    return {
-      todos: store.state.currentTodos,
-      todoContent: "",
-    };
-  },
-  methods: {
-    addTodo() {
-      store.dispatch(
-        TodoMutationTypes.ADD_TODO,
-        new TodoItem(this.todoContent)
-      );
-      this.todoContent = "";
-    },
-  },
-  mounted() {
-    store.dispatch("fetchTodos");
-  },
+	components: {
+		TodoListItem,
+	},
+	data() {
+		return {
+			todoContent: "",
+		};
+	},
+	computed: {
+		...mapGetters(["todos"])
+	},
+	methods: {
+		addTodo() {
+			store.dispatch(
+				TodoMutationTypes.ADD_TODO,
+				new TodoItem(this.todoContent)
+			);
+			this.todoContent = "";
+		},
+	},
+	async mounted() {
+		await store.dispatch("fetchTodos");
+	},
 };
 </script>
