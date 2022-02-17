@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import store from "@/store";
+import { mapActions } from "vuex";
 import { TodoItem } from "@/models/TodoItem";
 import { defineComponent, PropType } from "vue";
 
@@ -35,9 +35,7 @@ export default defineComponent({
 		},
 	},
 	methods: {
-		finishTodoItem() {
-			store.commit("finishTodo", this.todoItem);
-		},
+		...mapActions(["finishTodo"])
 	},
 });
 </script>
