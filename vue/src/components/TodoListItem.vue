@@ -8,9 +8,7 @@
 				</n-space>
 			</n-gi>
 		</n-grid>
-
-		<!-- <n-space @click="finishTodoItem" align="end"></n-space> -->
-
+		<n-button type="primary" size="medium" @click="finishTodo(todoItem)">Set Status</n-button>
 		<template #footer>
 			<small>Created: {{ todoItem.created }}</small>
 		</template>
